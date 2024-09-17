@@ -2,6 +2,7 @@
 package com.recipe.project.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +17,13 @@ public class RecipeAuthors {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer authorId;
 	
+	@Column(nullable = true)
 	private String authorName;
 	
+	@Column(nullable = true,unique = true)
 	private String authorEmail;
 	
+	@Column(nullable = true)
 	private String authorPhnNo;
 	
 	@OneToOne(mappedBy = "recipeAuthors" ,cascade = CascadeType.ALL,fetch =FetchType.EAGER)

@@ -2,8 +2,7 @@ package com.recipe.project.entity;
 
 import java.util.List;
 
-
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,18 +17,25 @@ public class RecipeSubmission {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer recipeId;
 	
+	@Column(nullable = true)
 	private String recipeTitle;
 	
+	@Column(nullable = true)
 	private String recipeType;
 	
+	@Column(nullable = true)
 	private Integer recipeTime;
 	
+	@Column(nullable = true)
 	private String recipeDifficulty;
 	
+	@Column(nullable = true)
 	private List<String> recipeIngredients;
 	
+	@Column(nullable = true)
 	private String recipeInstrucions;
 	
+	@Column(nullable = true)
 	private String recipeAuthor;
 	
 	@OneToOne
