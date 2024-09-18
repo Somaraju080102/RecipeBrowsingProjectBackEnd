@@ -8,4 +8,6 @@ import com.recipe.project.entity.RecipeLoginInfo;
 @Repository
 public interface RecipeLoginRepo  extends JpaRepository<RecipeLoginInfo, Integer>{
 
+    RecipeLoginInfo findByUserEmail(String email);
+
 }

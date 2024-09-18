@@ -1,6 +1,6 @@
 package com.recipe.project.entity;
 
-import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,14 +14,11 @@ public class RecipeLoginInfo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 	
-	@Column(nullable = true)
 	private String userName;
 	
-	@Column(nullable = true,unique = true)
 	private String userEmail;
 	
 	
-	@Column(nullable = true)
 	private String userHashCode;
 
 

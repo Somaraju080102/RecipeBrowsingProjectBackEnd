@@ -45,4 +45,11 @@ public class RecipeService {
 		
 	}
 
+
+	public boolean findUser(RecipeLoginInfo login) {
+	    // Assuming loginRepo is properly instantiated and injected
+	    RecipeLoginInfo existingUser = loginRepo.findByUserEmail(login.getUserEmail());
+	    return existingUser != null;
+	}
+
 }

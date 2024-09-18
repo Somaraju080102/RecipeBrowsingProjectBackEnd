@@ -24,13 +24,17 @@ import com.recipe.project.entity.RecipeSubmission;
 		
 	
 		@PostMapping("/signup")
-		public String SignUpPage(@RequestBody RecipeLoginInfo loginInfo) {
-			
-			recipeService.saveSignUpInfo(loginInfo);
-			
-			return "signedup";
-			
+		public String signUpPage(@RequestBody RecipeLoginInfo loginInfo) {
+		    boolean userExists = recipeService.findUser(loginInfo);
+
+		    if (userExists) {
+		        return "User already exists";
+		    } else {
+		        recipeService.saveSignUpInfo(loginInfo);
+		        return "Signed up successfully";
+		    }
 		}
+
 		
 		@GetMapping("/home")
 		public String homeCall() {
