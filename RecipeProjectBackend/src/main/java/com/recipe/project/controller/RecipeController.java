@@ -24,16 +24,49 @@ import com.recipe.project.entity.RecipeSubmission;
 		
 	
 		@PostMapping("/signup")
-		public String signUpPage(@RequestBody RecipeLoginInfo loginInfo) {
+		public ResponseEntity<String> signUpPage(@RequestBody RecipeLoginInfo loginInfo) {
+			
+			
+			
+			System.out.println(loginInfo.toString());
+			
+			
+//			return loginInfo;
 		    boolean userExists = recipeService.findUser(loginInfo);
+		    
+		    
 
 		    if (userExists) {
-		        return "User already exists";
+		    	
+		    	return new ResponseEntity<>("User already Exists please login",HttpStatus.NOT_MODIFIED);
+//		        
 		    } else {
 		        recipeService.saveSignUpInfo(loginInfo);
-		        return "Signed up successfully";
-		    }
+//		        return "Signed up successfully";
+		        }
+		    
+		    return new ResponseEntity<>("User SignUp Successfull",HttpStatus.CREATED);
+		    
 		}
+		
+		@PostMapping("/login")
+		public ResponseEntity<String> loginCheck(@RequestBody RecipeLoginInfo recipeLoginInfo){
+			
+			boolean checkPassword = recipeService.checkPassword(recipeLoginInfo.getUserEmail().toLowerCase(),recipeLoginInfo.getUserPassword(),recipeLoginInfo.getUserHashCode());
+			
+			if(checkPassword==true) {
+				System.out.println(checkPassword);
+				String username=recipeService.getUser(recipeLoginInfo.getUserEmail());
+				return new ResponseEntity<>(username,HttpStatus.ACCEPTED);
+
+			}
+			
+			return new ResponseEntity<>("failed",HttpStatus.CONFLICT);
+			
+			
+		}
+		
+		
 
 		
 		@GetMapping("/home")

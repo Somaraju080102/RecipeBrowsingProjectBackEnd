@@ -3,6 +3,7 @@ package com.recipe.project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.recipe.project.entity.RecipeLoginInfo;
@@ -13,7 +14,8 @@ import com.recipe.project.repo.RecipeSubmissionRepo;
 @Service
 public class RecipeService {
 	
-	
+	private final BCryptPasswordEncoder passwordEncoder =new BCryptPasswordEncoder();
+
 	
 	@Autowired
 	RecipeSubmissionRepo  recipeSubmissionRepo;
@@ -37,9 +39,15 @@ public class RecipeService {
 	}
 
 
-
 	public void saveSignUpInfo(RecipeLoginInfo loginInfo) {
 		// TODO Auto-generated method stub
+		String email=loginInfo.getUserEmail();
+		String password=loginInfo.getUserPassword();
+		
+		String encode = passwordEncoder.encode(email.toLowerCase()+password);
+		
+		loginInfo.setUserHashCode(encode);
+		loginInfo.setUserPassword("null");
 		
 		loginRepo.save(loginInfo);
 		
@@ -49,7 +57,33 @@ public class RecipeService {
 	public boolean findUser(RecipeLoginInfo login) {
 	    // Assuming loginRepo is properly instantiated and injected
 	    RecipeLoginInfo existingUser = loginRepo.findByUserEmail(login.getUserEmail());
+	    
 	    return existingUser != null;
+	}
+
+
+
+	public boolean checkPassword(String email, String userPassword, String userHashCode) {
+		
+		RecipeLoginInfo byUserEmail = loginRepo.findByUserEmail(email);
+		
+		String hascode=byUserEmail.getUserHashCode();
+		
+		
+		String checkEncode=email+userPassword;
+		
+		return passwordEncoder.matches(checkEncode, hascode);
+		
+		
+	}
+
+
+
+	public String getUser(String email) {
+		
+		RecipeLoginInfo byUser=loginRepo.findByUserEmail(email);
+		
+		return byUser.getUserName();
 	}
 
 }

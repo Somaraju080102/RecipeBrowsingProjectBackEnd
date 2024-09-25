@@ -16,7 +16,19 @@ public class RecipeLoginInfo {
 	
 	private String userName;
 	
+
+
+	@Override
+	public String toString() {
+		return "RecipeLoginInfo [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail
+				+ ", userPassword=" + userPassword + ", userHashCode=" + userHashCode + "]";
+	}
+
+
 	private String userEmail;
+	
+	private String userPassword;
+
 	
 	
 	private String userHashCode;
@@ -59,6 +71,16 @@ public class RecipeLoginInfo {
 
 	public void setUserHashCode(String userHashCode) {
 		this.userHashCode = userHashCode;
+	}
+
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 	
 	
