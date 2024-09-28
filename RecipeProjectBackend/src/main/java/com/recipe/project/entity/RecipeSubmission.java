@@ -18,6 +18,9 @@ public class RecipeSubmission {
 	private Integer recipeId;
 	
 	@Column(nullable = true)
+	private String 	recipeAuthorEmail;
+	
+	@Column(nullable = true)
 	private String recipeTitle;
 	
 	@Column(nullable = true)
@@ -39,7 +42,7 @@ public class RecipeSubmission {
 	private String recipeAuthor;
 	
 	@OneToOne
-	@JoinColumn(name = "rauthors")
+	@JoinColumn(name = "author_id")
 	private RecipeAuthors recipeAuthors;
 
 	public Integer getRecipeId() {
@@ -48,6 +51,14 @@ public class RecipeSubmission {
 
 	public void setRecipeId(Integer recipeId) {
 		this.recipeId = recipeId;
+	}
+
+	public String getRecipeAuthorEmail() {
+		return recipeAuthorEmail;
+	}
+
+	public void setRecipeAuthorEmail(String recipeAuthorEmail) {
+		this.recipeAuthorEmail = recipeAuthorEmail;
 	}
 
 	public String getRecipeTitle() {
@@ -113,9 +124,14 @@ public class RecipeSubmission {
 	public void setRecipeAuthors(RecipeAuthors recipeAuthors) {
 		this.recipeAuthors = recipeAuthors;
 	}
-	
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "RecipeSubmission [recipeId=" + recipeId + ", recipeAuthorEmail=" + recipeAuthorEmail + ", recipeTitle="
+				+ recipeTitle + ", recipeType=" + recipeType + ", recipeTime=" + recipeTime + ", recipeDifficulty="
+				+ recipeDifficulty + ", recipeIngredients=" + recipeIngredients + ", recipeInstrucions="
+				+ recipeInstrucions + ", recipeAuthor=" + recipeAuthor + ", recipeAuthors=" + recipeAuthors + "]";
+	}
+
+	
 }

@@ -6,4 +6,6 @@ import com.recipe.project.entity.RecipeSubmission;
 
 public interface RecipeSubmissionRepo extends JpaRepository<RecipeSubmission, Integer>{
 
+
+
 }

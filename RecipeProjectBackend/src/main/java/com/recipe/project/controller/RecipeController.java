@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.recipe.project.entity.RecipeAuthors;
 import com.recipe.project.entity.RecipeLoginInfo;
 import com.recipe.project.entity.RecipeSubmission;
 	import com.recipe.project.service.RecipeService;
@@ -20,6 +21,26 @@ import com.recipe.project.entity.RecipeSubmission;
 		
 		@Autowired
 		RecipeService recipeService;
+		
+		
+		@PostMapping("/authors")
+		public ResponseEntity<String> authorPage(@RequestBody RecipeLoginInfo loginInfo){
+			
+			recipeService.saveAuthInfo(loginInfo);
+			
+			return new ResponseEntity<>("Saved",HttpStatus.ACCEPTED);
+			
+			
+		}
+		
+		@PostMapping("/recipes")
+		public ResponseEntity<String> recipePage(@RequestBody RecipeSubmission recipeSubmission){
+			
+			recipeService.saveRecipeInfo(recipeSubmission);
+			
+			return new ResponseEntity<>("Saved",HttpStatus.ACCEPTED);
+			
+		}
 		
 		
 	
@@ -73,15 +94,15 @@ import com.recipe.project.entity.RecipeSubmission;
 		public String homeCall() {
 			return "Hello";
 		}
-		
-		@PostMapping("/recipesubmission")
-		public ResponseEntity<String> submissionRecipe(@RequestBody RecipeSubmission recipeSubmission){
-			
-			recipeService.saveRecipe(recipeSubmission);
-			
-			return new ResponseEntity<>("Sent",HttpStatus.ACCEPTED);
-			
-		}
+//		
+//		@PostMapping("/recipesubmission")
+//		public ResponseEntity<String> submissionRecipe(@RequestBody RecipeSubmission recipeSubmission){
+//			
+//			recipeService.saveRecipe(recipeSubmission);
+//			
+//			return new ResponseEntity<>("Sent",HttpStatus.ACCEPTED);
+//			
+//		}
 		
 		@GetMapping("/allrecipes")
 		public List<RecipeSubmission> getRecipes() {

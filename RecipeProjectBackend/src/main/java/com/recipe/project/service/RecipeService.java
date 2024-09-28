@@ -3,11 +3,14 @@ package com.recipe.project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.recipe.project.entity.RecipeAuthors;
 import com.recipe.project.entity.RecipeLoginInfo;
 import com.recipe.project.entity.RecipeSubmission;
+import com.recipe.project.repo.RecipeAuthorsRepo;
 import com.recipe.project.repo.RecipeLoginRepo;
 import com.recipe.project.repo.RecipeSubmissionRepo;
 
@@ -21,13 +24,18 @@ public class RecipeService {
 	RecipeSubmissionRepo  recipeSubmissionRepo;
 	
 	@Autowired
+	RecipeAuthorsRepo authorsRepo;
+	
+	@Autowired
 	RecipeLoginRepo loginRepo;
 
-	public void saveRecipe(RecipeSubmission recipeSubmission) {
-		
-		recipeSubmissionRepo.save(recipeSubmission);
-		
-	}
+//	public void saveRecipe(RecipeSubmission recipeSubmission) {
+//		
+//		System.out.println("Instuctuions "+ recipeSubmission.getRecipeInstrucions());
+//		
+//		recipeSubmissionRepo.save(recipeSubmission);
+//		
+//	}
 	
 	
 
@@ -84,6 +92,41 @@ public class RecipeService {
 		RecipeLoginInfo byUser=loginRepo.findByUserEmail(email);
 		
 		return byUser.getUserName();
+	}
+
+
+
+	public void saveAuthInfo(RecipeLoginInfo loginInfo) {
+		
+		RecipeAuthors authors = new RecipeAuthors();
+		authors.setAuthorEmail(loginInfo.getUserEmail());
+		authors.setAuthorName(loginInfo.getUserName());
+		
+		authorsRepo.save(authors);
+		
+	}
+
+
+
+	public void saveRecipeInfo(RecipeSubmission recipeSubmission) {
+		
+		
+		
+		System.out.println(recipeSubmission.toString());
+		
+		System.out.println("Author "+recipeSubmission.getRecipeAuthor());
+		System.out.println("Instuctuions "+ recipeSubmission.getRecipeInstrucions());
+		System.out.println("Author Email "+ recipeSubmission.getRecipeAuthorEmail());
+		
+		
+		RecipeAuthors byAuthorEmail = authorsRepo.findByAuthorEmail(recipeSubmission.getRecipeAuthorEmail());
+		
+		System.out.println(byAuthorEmail.toString());
+		recipeSubmission.setRecipeAuthors(byAuthorEmail);
+		
+					
+		recipeSubmissionRepo.save(recipeSubmission);
+		
 	}
 
 }

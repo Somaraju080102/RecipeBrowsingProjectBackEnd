@@ -9,5 +9,5 @@ import com.recipe.project.entity.RecipeLoginInfo;
 public interface RecipeLoginRepo  extends JpaRepository<RecipeLoginInfo, Integer>{
 
     RecipeLoginInfo findByUserEmail(String email);
-
+ 
 }

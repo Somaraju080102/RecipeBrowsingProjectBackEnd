@@ -17,17 +17,22 @@ public class RecipeAuthors {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer authorId;
 	
+	@Override
+	public String toString() {
+		return "RecipeAuthors [authorId=" + authorId + ", authorName=" + authorName + ", authorEmail=" + authorEmail
+				+  "]";
+	}
+
 	@Column(nullable = true)
 	private String authorName;
 	
 	@Column(nullable = true,unique = true)
 	private String authorEmail;
 	
-	@Column(nullable = true)
-	private String authorPhnNo;
-	
 	@OneToOne(mappedBy = "recipeAuthors" ,cascade = CascadeType.ALL,fetch =FetchType.EAGER)
 	private RecipeSubmission recipeSubmission;
+	
+	
 
 	public Integer getAuthorId() {
 		return authorId;
@@ -53,13 +58,6 @@ public class RecipeAuthors {
 		this.authorEmail = authorEmail;
 	}
 
-	public String getAuthorPhnNo() {
-		return authorPhnNo;
-	}
-
-	public void setAuthorPhnNo(String authorPhnNo) {
-		this.authorPhnNo = authorPhnNo;
-	}
 
 	public RecipeSubmission getRecipeSubmission() {
 		return recipeSubmission;
