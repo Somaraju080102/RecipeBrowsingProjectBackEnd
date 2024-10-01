@@ -1,6 +1,10 @@
 
 package com.recipe.project.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +12,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -28,11 +34,20 @@ public class RecipeAuthors {
 	
 	@Column(nullable = true,unique = true)
 	private String authorEmail;
+	   
+	   @JsonIgnore
+	   @OneToMany(mappedBy = "recipeAuthors", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	    private List<RecipeSubmission> recipeSubmissions;
 	
-	@OneToOne(mappedBy = "recipeAuthors" ,cascade = CascadeType.ALL,fetch =FetchType.EAGER)
-	private RecipeSubmission recipeSubmission;
 	
-	
+
+	public List<RecipeSubmission> getRecipeSubmissions() {
+		return recipeSubmissions;
+	}
+
+	public void setRecipeSubmissions(List<RecipeSubmission> recipeSubmissions) {
+		this.recipeSubmissions = recipeSubmissions;
+	}
 
 	public Integer getAuthorId() {
 		return authorId;
@@ -59,13 +74,6 @@ public class RecipeAuthors {
 	}
 
 
-	public RecipeSubmission getRecipeSubmission() {
-		return recipeSubmission;
-	}
-
-	public void setRecipeSubmission(RecipeSubmission recipeSubmission) {
-		this.recipeSubmission = recipeSubmission;
-	}
 	
 	
 

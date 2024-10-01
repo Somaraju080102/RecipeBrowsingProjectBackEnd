@@ -78,7 +78,7 @@ public class RecipeService {
 		String hascode=byUserEmail.getUserHashCode();
 		
 		
-		String checkEncode=email+userPassword;
+		String checkEncode=email.toLowerCase()+userPassword;
 		
 		return passwordEncoder.matches(checkEncode, hascode);
 		
@@ -108,25 +108,44 @@ public class RecipeService {
 
 
 
-	public void saveRecipeInfo(RecipeSubmission recipeSubmission) {
-		
-		
-		
-		System.out.println(recipeSubmission.toString());
-		
-		System.out.println("Author "+recipeSubmission.getRecipeAuthor());
-		System.out.println("Instuctuions "+ recipeSubmission.getRecipeInstrucions());
-		System.out.println("Author Email "+ recipeSubmission.getRecipeAuthorEmail());
-		
-		
-		RecipeAuthors byAuthorEmail = authorsRepo.findByAuthorEmail(recipeSubmission.getRecipeAuthorEmail());
-		
-		System.out.println(byAuthorEmail.toString());
-		recipeSubmission.setRecipeAuthors(byAuthorEmail);
-		
-					
-		recipeSubmissionRepo.save(recipeSubmission);
-		
+//	public void saveRecipeInfo(RecipeSubmission recipeSubmission) {
+//		
+//		
+//		
+//		System.out.println(recipeSubmission.toString());
+//		
+//		System.out.println("Author "+recipeSubmission.getRecipeAuthor());
+//		System.out.println("Instuctuions "+ recipeSubmission.getRecipeInstrucions());
+//		System.out.println("Author Email "+ recipeSubmission.getRecipeAuthorEmail());
+//		
+//		
+//		RecipeAuthors byAuthorEmail = authorsRepo.findByAuthorEmail(recipeSubmission.getRecipeAuthorEmail());
+//		
+//		System.out.println("dd");
+//		
+//		System.out.println(byAuthorEmail.toString());
+//		recipeSubmission.setRecipeAuthors(byAuthorEmail);
+//		 
+//					
+//		recipeSubmissionRepo.save(recipeSubmission);
+//		
+//	}
+	public int saveRecipeInfo(RecipeSubmission recipeSubmission) {
+	    // Fetch existing author by email from the RecipeAuthors table
+	    RecipeAuthors byAuthorEmail = authorsRepo.findByAuthorEmail(recipeSubmission.getRecipeAuthorEmail());
+	    
+	    if (byAuthorEmail == null) {
+	        // Author does not exist, handle the case accordingly
+	        throw new RuntimeException("Author with email " + recipeSubmission.getRecipeAuthorEmail() + " not found!");
+	    }
+
+	    // Associate the fetched author with the recipe
+	    recipeSubmission.setRecipeAuthors(byAuthorEmail);
+	    
+	    // Save the recipe submission (with correct association)
+	    recipeSubmissionRepo.save(recipeSubmission);
+	    
+	    return byAuthorEmail.getAuthorId();
 	}
 
 }

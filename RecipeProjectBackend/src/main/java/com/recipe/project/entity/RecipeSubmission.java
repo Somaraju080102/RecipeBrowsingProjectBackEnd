@@ -2,12 +2,16 @@ package com.recipe.project.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -41,9 +45,11 @@ public class RecipeSubmission {
 	@Column(nullable = true)
 	private String recipeAuthor;
 	
-	@OneToOne
-	@JoinColumn(name = "author_id")
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "author_id", referencedColumnName = "authorId", nullable = false)
 	private RecipeAuthors recipeAuthors;
+
 
 	public Integer getRecipeId() {
 		return recipeId;

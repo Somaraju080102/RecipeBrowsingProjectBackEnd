@@ -34,11 +34,12 @@ import com.recipe.project.entity.RecipeSubmission;
 		}
 		
 		@PostMapping("/recipes")
-		public ResponseEntity<String> recipePage(@RequestBody RecipeSubmission recipeSubmission){
+		public ResponseEntity<Integer> recipePage(@RequestBody RecipeSubmission recipeSubmission){
 			
-			recipeService.saveRecipeInfo(recipeSubmission);
+			int saveRecipeInfo = recipeService.saveRecipeInfo(recipeSubmission);
 			
-			return new ResponseEntity<>("Saved",HttpStatus.ACCEPTED);
+			
+			return new ResponseEntity<>(saveRecipeInfo,HttpStatus.ACCEPTED);
 			
 		}
 		

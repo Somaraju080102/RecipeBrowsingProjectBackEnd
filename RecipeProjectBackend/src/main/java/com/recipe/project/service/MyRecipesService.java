@@ -1,5 +1,6 @@
 package com.recipe.project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +20,14 @@ public class MyRecipesService {
 	@Autowired
 	RecipeSubmissionRepo recipeSubmissionRepo;
 
-	public RecipeSubmission getMyRecipes(Integer id) {
+	public List<RecipeSubmission> getMyRecipes(Integer id) {
 		
-		Optional<RecipeAuthors> byId = authorsRepo.findById(id);
-		System.out.println(byId.isPresent());
-		if(byId.isPresent()) {
-			RecipeAuthors recipeAuthors = byId.get();
-			
-			int sid=recipeAuthors.getAuthorId();
-			
-			Optional<RecipeSubmission> byId2 = recipeSubmissionRepo.findById(sid);
-			
-			if(byId2.isPresent()) {
-				RecipeSubmission recipeSubmission = byId2.get();
+		List<RecipeSubmission> byRecipeAuthorsAuthorId = recipeSubmissionRepo.findByRecipeAuthorsAuthorId(id);
 				
-				return recipeSubmission;
-			}
-		}
-		
-		return null;
+		return byRecipeAuthorsAuthorId;
+				
+			
+	}
 		
 	}
 
@@ -45,4 +35,4 @@ public class MyRecipesService {
 		
 	
 
-}
+

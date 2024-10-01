@@ -1,5 +1,7 @@
 package com.recipe.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,9 @@ public class MyRecipeController {
 	MyRecipesService  myRecipesService;
 	
 	@GetMapping("/myrecipes/{id}")
-	public ResponseEntity<RecipeSubmission> getMyRecipes(@PathVariable("id") Integer id){
+	public ResponseEntity<List<RecipeSubmission>> getMyRecipes(@PathVariable("id") Integer id){
 		
-		  RecipeSubmission myRecipes = myRecipesService.getMyRecipes(id);
+		 List<RecipeSubmission> myRecipes = myRecipesService.getMyRecipes(id);
 		
 		return new ResponseEntity<>(myRecipes,HttpStatus.ACCEPTED);
 		
