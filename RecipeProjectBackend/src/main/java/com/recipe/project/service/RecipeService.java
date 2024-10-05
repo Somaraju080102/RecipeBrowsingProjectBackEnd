@@ -148,4 +148,13 @@ public class RecipeService {
 	    return byAuthorEmail.getAuthorId();
 	}
 
+
+	public Integer getAuthorId(String userEmail) {
+		// TODO Auto-generated method stub
+		
+		RecipeAuthors byAuthorEmail = authorsRepo.findByAuthorEmail(userEmail);
+		
+		return byAuthorEmail.getAuthorId();
+	}
+
 }

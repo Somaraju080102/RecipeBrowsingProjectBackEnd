@@ -1,6 +1,7 @@
 	package com.recipe.project.controller;
 	
-	import java.util.List;
+	import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 	import org.springframework.http.HttpStatus;
@@ -59,6 +60,7 @@ import com.recipe.project.entity.RecipeSubmission;
 		    
 
 		    if (userExists) {
+		    	System.out.println("User already esixts");
 		    	
 		    	return new ResponseEntity<>("User already Exists please login",HttpStatus.NOT_MODIFIED);
 //		        
@@ -72,18 +74,28 @@ import com.recipe.project.entity.RecipeSubmission;
 		}
 		
 		@PostMapping("/login")
-		public ResponseEntity<String> loginCheck(@RequestBody RecipeLoginInfo recipeLoginInfo){
+		public ResponseEntity<List<String>> loginCheck(@RequestBody RecipeLoginInfo recipeLoginInfo){
 			
 			boolean checkPassword = recipeService.checkPassword(recipeLoginInfo.getUserEmail().toLowerCase(),recipeLoginInfo.getUserPassword(),recipeLoginInfo.getUserHashCode());
-			
+			List<String> ans=new ArrayList<>();
 			if(checkPassword==true) {
 				System.out.println(checkPassword);
 				String username=recipeService.getUser(recipeLoginInfo.getUserEmail());
-				return new ResponseEntity<>(username,HttpStatus.ACCEPTED);
-
+				
+				Integer authorId = recipeService.getAuthorId(recipeLoginInfo.getUserEmail());
+				ans.add(username);
+				ans.add(authorId.toString());
+				
+				
+				System.out.println(authorId);
+				
+				
+				
+				return new ResponseEntity<>(ans,HttpStatus.ACCEPTED);
+				
 			}
 			
-			return new ResponseEntity<>("failed",HttpStatus.CONFLICT);
+			return new ResponseEntity<>(ans,HttpStatus.CONFLICT);
 			
 			
 		}

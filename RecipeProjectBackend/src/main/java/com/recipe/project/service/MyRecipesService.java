@@ -28,6 +28,14 @@ public class MyRecipesService {
 				
 			
 	}
+
+	public void deleteRecipe(Integer rid) {
+		
+		recipeSubmissionRepo.deleteById(rid);
+		
+	}
+	
+	
 		
 	}
 
