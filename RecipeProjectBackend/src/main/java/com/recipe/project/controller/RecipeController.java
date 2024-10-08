@@ -34,6 +34,8 @@ import com.recipe.project.entity.RecipeSubmission;
 			
 		}
 		
+		
+		
 		@PostMapping("/recipes")
 		public ResponseEntity<Integer> recipePage(@RequestBody RecipeSubmission recipeSubmission){
 			
