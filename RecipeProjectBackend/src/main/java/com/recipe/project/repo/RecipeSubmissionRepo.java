@@ -24,6 +24,8 @@ public interface RecipeSubmissionRepo extends JpaRepository<RecipeSubmission, In
          @Param("types") List<String> types, 
          @Param("difficulty") List<String> difficulty,
          @Param("time") List<String> time
+         
+   
      );
 
 

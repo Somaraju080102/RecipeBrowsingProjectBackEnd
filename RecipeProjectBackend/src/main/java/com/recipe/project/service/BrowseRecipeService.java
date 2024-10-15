@@ -25,7 +25,11 @@ public class BrowseRecipeService {
 	public List<RecipeSubmission> customfindRecipes(String search, List<String> types, List<String> difficulty,
 			List<String> time) {
 		
+		System.out.println(types+" "+"types");
+		System.out.println(difficulty+" "+"difficulty");
          List<RecipeSubmission> customFindRecipes = recipeSubmissionRepo.customFindRecipes(search, types, difficulty, time);
+         
+         
          
          
 		return customFindRecipes;
